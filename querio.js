@@ -9,16 +9,6 @@ const mssql = require('mssql');
 // CONFIG DIR: /home/username/.config/tengu/.active
 const config_dir = path.resolve(os.homedir(), '.config', 'tengu', '.active');
 
-// Config File structure:
-// {
-//   "name": "fxops-nonprod",
-//   "engine": "sqlserver",
-//   "host": "mf1uuzgduocblw2.ckmdzcpvpujp.eu-west-2.rds.amazonaws.com",
-//   "port": "1433",
-//   "username": "FxopsTestDb",
-//   "password": "oy9ObjMJFSgPcRnZOgMU3^eqToiiqn",
-//   "database": "fxops"
-// }
 let config = {};
 
 try {
