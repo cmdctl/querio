@@ -1,0 +1,17 @@
+{
+  "name": "querio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "querio.js",
+  "bin": "querio.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mssql": "^9.1.1",
+    "pg": "^8.10.0"
+  }
+}
