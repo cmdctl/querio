@@ -19,6 +19,17 @@ try {
 
 
 async function main() {
+  // get first arg
+  let params;
+  const sql_console_file = process.argv[2];
+  if (sql_console_file) {
+    // remove .sql from sql_console_file
+    const params_file = sql_console_file.replace(/\.sql$/, '.json');
+    try {
+      params = JSON.parse(fs.readFileSync(params_file, 'utf8'));
+    } catch (e) {
+    }
+  }
   // read all from stdin
   const sql = fs.readFileSync(0, 'utf8');
   switch (config.engine) {
@@ -40,7 +51,13 @@ async function main() {
         }
       }
       const pool = await mssql.connect(sqlConfig);
-      const result = await pool.query(sql);
+      const request = pool.request();
+      if (params) {
+        Object.keys(params).forEach(key => {
+          request.input(key, params[key]);
+        });
+      }
+      const result = await request.query(sql);
       console.table(result.recordset);
       process.exit(0);
     case 'postgres':
@@ -52,7 +69,7 @@ async function main() {
         port: Number(config.port),
       });
       await client.connect();
-      const data = await client.query(sql)
+      const data = await client.query(sql, params)
       console.table(data.rows);
       process.exit(0);
 
