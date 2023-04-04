@@ -17,7 +17,6 @@ try {
   console.log('No config file found');
 }
 
-
 async function main() {
   // get first arg
   let params;
@@ -30,8 +29,7 @@ async function main() {
     } catch (e) {
     }
   }
-  // read all from stdin
-  const sql = fs.readFileSync(0, 'utf8');
+  const sql = fs.readFileSync(0, 'utf8').replace(/\0/g, '\n');
   switch (config.engine) {
     case 'sqlserver':
       const sqlConfig = {
