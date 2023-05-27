@@ -29,7 +29,7 @@ async function main() {
     } catch (e) {
     }
   }
-  const sql = fs.readFileSync(0, 'utf8').replace(/\0/g, '\n');
+  const sql = fs.readFileSync(sql_console_file, 'utf8');
   switch (config.engine) {
     case 'sqlserver':
       const sqlConfig = {
@@ -57,7 +57,7 @@ async function main() {
       }
       const result = await request.query(sql);
       console.table(result.recordset);
-      process.exit(0);
+      break;
     case 'postgres':
       const client = new pg.Client({
         user: config.username,
@@ -69,7 +69,7 @@ async function main() {
       await client.connect();
       const data = await client.query(sql, params)
       console.table(data.rows);
-      process.exit(0);
+      break;
 
     default:
       console.log('Unsupported engine');
